@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml"
+      xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+        http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
+        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+        ">
+
+
+    <vm:endpoint name="requestCatalog" path="catalog.request" exchange-pattern="request-response"/>
+    <vm:endpoint name="updateCatalog" path="catalog.update" exchange-pattern="one-way"/>
+
+
+    <flow name="RequestCatalogFlow">
+        <inbound-endpoint ref="requestCatalog"/>
+        <logger level="INFO" category="RequestCatalogFlow" message="Request payload:  #[payload]"/>
+        <http:outbound-endpoint host="localhost" port="9001" path="/catalog" method="GET"/>
+        <logger level="INFO" category="RequestCatalogFlow" message="Response payload:  #[payload]"/>
+    </flow>
+    <flow name="UpdateCatalogFlow">
+        <inbound-endpoint ref="updateCatalog"/>
+        <logger level="INFO" category="UpdateCatalogFlow" message="Request payload:  #[payload]"/>
+        <set-property propertyName="updatedBy" value="Bill Murray"/>
+        <mulexml:object-to-xml-transformer/>
+        <http:outbound-endpoint host="localhost" port="9001" path="/catalog" method="PUT"
+                                contentType="application/xml"/>
+        <logger level="INFO" category="UpdateCatalogFlow" message="Response payload:  #[payload]"/>
+    </flow>
+</mule>

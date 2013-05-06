@@ -1,0 +1,10 @@
+<catalog>
+    <item id="1">
+        <name>Widget</name>
+        <price>$5.99</price>
+    </item>
+    <item id="2">
+        <name>Gadget</name>
+        <price>$3.22</price>
+    </item>
+</catalog>
