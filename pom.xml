@@ -24,11 +24,11 @@
     <distributionManagement>
         <repository>
             <id>confluex-releases</id>
-            <url>http://dev.confluex.com/nexus/content/repositories/releases</url>
+            <url>http://dev.confluex.com/nexus/content/repositories/public-releases/</url>
         </repository>
         <snapshotRepository>
             <id>confluex-snapshots</id>
-            <url>http://dev.confluex.com/nexus/content/repositories/snapshots</url>
+            <url>http://dev.confluex.com/nexus/content/repositories/public-releases/</url>
         </snapshotRepository>
     </distributionManagement>
     <properties>
