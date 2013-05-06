@@ -15,11 +15,17 @@ class HttpMockFunctionalTest extends FunctionalTestCase {
     Server server
     MockHttpRequestHandler handler
 
-    @Override
+    /**
+     * The Mule Configuration file(s) to load when starting the embedded Mule server
+     */
     protected String getConfigResources() {
         return "test-mock-http-config.xml"
     }
 
+    /**
+     * Create a new Jetty server before each test and assign our MockHttpRequest handler to process
+     * requests.
+     */
     @Before
     void createMockHttpServer() {
         server = new Server(9001)
@@ -29,12 +35,18 @@ class HttpMockFunctionalTest extends FunctionalTestCase {
         server.stopAtShutdown = true
     }
 
+    /**
+     * Stop the server between each test to ensure all of the connections are cleaned up.
+     */
     @After
     void stopMockHttpServer() {
-        sleep(100) // gives mule a bit of time to finish shutting its connections down.. not required but reduces log noise
+        sleep(100)
         server.stop()
     }
 
+    /**
+     * Retrieve the catalog XML and assert interactions
+     */
     @Test
     void shouldListCatalog() {
         handler.when("/catalog")
@@ -47,6 +59,9 @@ class HttpMockFunctionalTest extends FunctionalTestCase {
         handler.verify("/catalog", MethodExpectation.GET)
     }
 
+    /**
+     * Update the catalog with XML and assert interactions
+     */
     @Test
     void shouldUpdateCatalog() {
         handler.when("/catalog")
@@ -61,10 +76,11 @@ class HttpMockFunctionalTest extends FunctionalTestCase {
         ]
         muleContext.client.dispatch("updateCatalog", payload, [:])
 
-        // vm endpoint is async, need to wait until the endpoint has been called this time
-        assert handler.waitForEvents(1, 100000)
-        // now we can do verifications after the http calls
-        println handler.getRequests("/catalog").headers
+        // vm endpoint is async, we need to wait until the handler processes
+        // the request or times out (error condition)
+        assert handler.waitForEvents(1, 1000)
+
+        // now we can do verifications
         handler.verify("/catalog",
                 MethodExpectation.PUT,
                 MediaTypeExpectation.XML,

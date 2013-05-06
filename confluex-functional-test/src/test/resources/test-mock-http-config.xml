@@ -4,13 +4,16 @@
       xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
       xmlns:http="http://www.mulesoft.org/schema/mule/http"
       xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml"
+      xmlns:context="http://www.springframework.org/schema/context"
       xsi:schemaLocation="
         http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
         http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
         http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
         http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         ">
 
+    <context:property-placeholder location="classpath:test-mock-http-config.properties"/>
 
     <vm:endpoint name="requestCatalog" path="catalog.request" exchange-pattern="request-response"/>
     <vm:endpoint name="updateCatalog" path="catalog.update" exchange-pattern="one-way"/>
@@ -19,7 +22,7 @@
     <flow name="RequestCatalogFlow">
         <inbound-endpoint ref="requestCatalog"/>
         <logger level="INFO" category="RequestCatalogFlow" message="Request payload:  #[payload]"/>
-        <http:outbound-endpoint host="localhost" port="9001" path="/catalog" method="GET"/>
+        <http:outbound-endpoint host="${service.host}" port="${service.port}" path="/catalog" method="GET"/>
         <logger level="INFO" category="RequestCatalogFlow" message="Response payload:  #[payload]"/>
     </flow>
     <flow name="UpdateCatalogFlow">
@@ -27,7 +30,7 @@
         <logger level="INFO" category="UpdateCatalogFlow" message="Request payload:  #[payload]"/>
         <set-property propertyName="updatedBy" value="Bill Murray"/>
         <mulexml:object-to-xml-transformer/>
-        <http:outbound-endpoint host="localhost" port="9001" path="/catalog" method="PUT"
+        <http:outbound-endpoint host="${service.host}" port="${service.port}" path="/catalog" method="PUT"
                                 contentType="application/xml"/>
         <logger level="INFO" category="UpdateCatalogFlow" message="Response payload:  #[payload]"/>
     </flow>
