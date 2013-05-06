@@ -7,6 +7,20 @@
     <packaging>pom</packaging>
     <name>Confluex: Mule Parent Pom</name>
     <description>Provides dependency and build settings for Confluex Mule projects</description>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>mcantrell</id>
+            <name>Mike Cantrell</name>
+            <email>mcantrell.humansonly@confluex.com</email>
+        </developer>
+    </developers>
     <distributionManagement>
         <repository>
             <id>confluex-releases</id>

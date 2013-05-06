@@ -2,6 +2,11 @@
 
 This is a library of extension to Mule code. It contains utility code for testing, etc.
 
+# Warning
+
+This library is still under heavy development. Feel free to use, contribute but it's still pretty rough in there
+right now :-)
+
 # Modules
 
 **confluex-test-http**
