@@ -78,7 +78,7 @@ class HttpMockFunctionalTest extends FunctionalTestCase {
 
         // vm endpoint is async, we need to wait until the handler processes
         // the request or times out (error condition)
-        assert handler.waitForEvents(1, 1000)
+        assert handler.waitForEvents(1, 10000)
 
         // now we can do verifications
         handler.verify("/catalog",
