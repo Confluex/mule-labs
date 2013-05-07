@@ -9,6 +9,9 @@ the API until it reaches 1.0 status. Of course, we'll try to keep breaking chang
 
 The Confluex Mule Extension is composed of several modules:
 
+* [confluex-test-http] (#confluex-test-http)
+* [confluex-test-notifications] (#confluex-test-notifications)
+
 ## confluex-test-http
 
 Mock HTTP testing library for mocking out interaction to HTTP endpoints from within Mule FunctionalTestCase (although
