@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Confluex/confluex-mule-extensions.png)]
+[![Build Status](https://travis-ci.org/Confluex/confluex-mule-extensions.png?branch=master)](https://travis-ci.org/Confluex/confluex-mule-extensions)
 
 # Confluex Mule Extensions
 
