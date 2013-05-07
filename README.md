@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Confluex/confluex-mule-extensions.png)]
+
 # Confluex Mule Extensions
 
 This is a library of extension to Mule code. It contains utility code for testing, etc.
