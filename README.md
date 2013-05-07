@@ -5,12 +5,11 @@ This is a library of extension to Mule code. It contains utility code for testin
 This library is still under heavy development. Feel free to use, contribute but there could be changes to
 the API until it reaches 1.0 status. Of course, we'll try to keep breaking changes to a minimum.
 
-# Modules
+**Table of Contents**
 
-The Confluex Mule Extension is composed of several modules:
-
-* [confluex-test-http] (#confluex-test-http)
-* [confluex-test-notifications] (#confluex-test-notifications)
+* [Module: confluex-test-http] (#confluex-test-http)
+* [Module: confluex-test-notifications] (#confluex-test-notifications)
+* [Using the Extensions] (#using-the-extensions)
 
 ## confluex-test-http
 
