@@ -1,10 +1,10 @@
 package com.confluex.mule.test.functional
 
-import com.confluex.mule.test.event.EndpointListener
+import com.confluex.mule.test.event.BlockingEndpointListener
 import org.junit.Test
 import org.mule.tck.junit4.FunctionalTestCase
 
-class EndpointListenerFunctionalTest extends FunctionalTestCase {
+class BlockingEndpointListenerFunctionalTest extends FunctionalTestCase {
 
     @Override
     protected String getConfigResources() {
@@ -13,7 +13,7 @@ class EndpointListenerFunctionalTest extends FunctionalTestCase {
 
     @Test
     void shouldWaitForSingleMessage() {
-        def listener = new EndpointListener("out")
+        def listener = new BlockingEndpointListener("out")
         muleContext.registerListener(listener)
         muleContext.client.dispatch("in", "Bacon", [:])
         assert listener.waitForMessage()
@@ -22,7 +22,7 @@ class EndpointListenerFunctionalTest extends FunctionalTestCase {
 
     @Test
     void shouldTimeOutIfNumberOfMessagesIsLessThanExpected() {
-        def listener = new EndpointListener("out", 2)
+        def listener = new BlockingEndpointListener("out", 2)
         muleContext.registerListener(listener)
         muleContext.client.dispatch("in", "Bacon", [:])
         assert !listener.waitForMessage(2000)
