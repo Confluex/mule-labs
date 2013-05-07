@@ -14,8 +14,132 @@ The Confluex Mule Extension is composed of several modules:
 Mock HTTP testing library for mocking out interaction to HTTP endpoints from within Mule FunctionalTestCase (although
 it could be used without mule at all).
 
-<script src="http://gist-it.appspot.com/https://github.com/Confluex/confluex-mule-extensions/blob/master/confluex-functional-test/src/test/groovy/com/confluex/mule/test/functional/BlockingEndpointListenerFunctionalTest.groovy">
-</script>
+_Mule Configuration_
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml"
+      xmlns:context="http://www.springframework.org/schema/context"
+      xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+        http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
+        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        ">
+
+    <context:property-placeholder location="classpath:test-mock-http-config.properties"/>
+
+    <vm:endpoint name="requestCatalog" path="catalog.request" exchange-pattern="request-response"/>
+    <vm:endpoint name="updateCatalog" path="catalog.update" exchange-pattern="one-way"/>
+
+
+    <flow name="RequestCatalogFlow">
+        <inbound-endpoint ref="requestCatalog"/>
+        <logger level="INFO" category="RequestCatalogFlow" message="Request payload:  #[payload]"/>
+        <http:outbound-endpoint host="${service.host}" port="${service.port}" path="/catalog" method="GET"/>
+        <logger level="INFO" category="RequestCatalogFlow" message="Response payload:  #[payload]"/>
+    </flow>
+    <flow name="UpdateCatalogFlow">
+        <inbound-endpoint ref="updateCatalog"/>
+        <logger level="INFO" category="UpdateCatalogFlow" message="Request payload:  #[payload]"/>
+        <set-property propertyName="updatedBy" value="Bill Murray"/>
+        <mulexml:object-to-xml-transformer/>
+        <http:outbound-endpoint host="${service.host}" port="${service.port}" path="/catalog" method="PUT"
+                                contentType="application/xml"/>
+        <logger level="INFO" category="UpdateCatalogFlow" message="Response payload:  #[payload]"/>
+    </flow>
+</mule>
+```
+
+_Functional Test Case_
+
+```groovy
+
+class HttpMockFunctionalTest extends FunctionalTestCase {
+
+    Server server
+    MockHttpRequestHandler handler
+
+    /**
+     * The Mule Configuration file(s) to load when starting the embedded Mule server
+     */
+    protected String getConfigResources() {
+        return "test-mock-http-config.xml"
+    }
+
+    /**
+     * Create a new Jetty server before each test and assign our MockHttpRequest handler to process
+     * requests.
+     */
+    @Before
+    void createMockHttpServer() {
+        server = new Server(9001)
+        handler = new MockHttpRequestHandler()
+        server.handler = handler
+        server.start()
+        server.stopAtShutdown = true
+    }
+
+    /**
+     * Stop the server between each test to ensure all of the connections are cleaned up.
+     */
+    @After
+    void stopMockHttpServer() {
+        sleep(100)
+        server.stop()
+    }
+
+    /**
+     * Retrieve the catalog XML and assert interactions
+     */
+    @Test
+    void shouldListCatalog() {
+        handler.when("/catalog")
+                .thenReturnResource("/payloads/catalog.xml")
+                .withStatus(200)
+
+        def message = muleContext.client.send("requestCatalog", "", [:])
+        assert message.payloadAsString == this.class.getResourceAsStream("/payloads/catalog.xml").text
+
+        handler.verify("/catalog", MethodExpectation.GET)
+    }
+
+    /**
+     * Update the catalog with XML and assert interactions
+     */
+    @Test
+    void shouldUpdateCatalog() {
+        handler.when("/catalog")
+                .thenReturnText("Updated")
+                .withStatus(302)
+                .withHeader("Location", "http://localhost:9001/catalog")
+
+
+        def payload = [
+                [id: 1, name: "Super Widget"],
+                [id: 2, name: "Super Gadget"]
+        ]
+        muleContext.client.dispatch("updateCatalog", payload, [:])
+
+        // vm endpoint is async, we need to wait until the handler processes
+        // the request or times out (error condition)
+        assert handler.waitForEvents(1, 10000)
+
+        // now we can do verifications
+        handler.verify("/catalog",
+                MethodExpectation.PUT,
+                MediaTypeExpectation.XML,
+                new HeaderExpectation("updatedBy", "Bill Murray")
+        )
+    }
+}
+
+```
 
 
 ## confluex-test-notifications
