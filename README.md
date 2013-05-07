@@ -25,7 +25,7 @@ sending the messages to a mock endpoint).
 This event listener will attach to an endpoint and allow your test to wait and collect the messages sent to the endpoint.
 The following example configuration and test case demonstrate the basic usage:
 
-__Mule Configuration__
+_Mule Configuration_
 
 
 ```xml
@@ -54,7 +54,7 @@ __Mule Configuration__
 </mule>
 ```
 
-__Functional Test Case__
+_Functional Test Case_
 
 ```groovy
 class BlockingEndpointListenerFunctionalTest extends FunctionalTestCase {
