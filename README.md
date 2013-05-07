@@ -14,6 +14,9 @@ The Confluex Mule Extension is composed of several modules:
 Mock HTTP testing library for mocking out interaction to HTTP endpoints from within Mule FunctionalTestCase (although
 it could be used without mule at all).
 
+<script src="http://gist-it.appspot.com/github/Confluex/confluex-mule-extensions/master/confluex-functional-test/src/test/groovy/com/confluex/mule/test/functional/BlockingEndpointListenerFunctionalTest.groovy"></script>
+
+
 ## confluex-test-notifications
 
 Since the MuleFunctionalTest runs in a separate thread from the server, it's often
@@ -92,6 +95,11 @@ Maven Artifact:
 <dependency>
     <groupId>com.confluex.mule</groupId>
     <artifactId>confluex-test-http</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+</dependency>
+<dependency>
+    <groupId>com.confluex.mule</groupId>
+    <artifactId>confluex-test-notifications</artifactId>
     <version>0.1.0-SNAPSHOT</version>
 </dependency>
 ```
