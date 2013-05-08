@@ -234,6 +234,9 @@ class BlockingEndpointListenerFunctionalTest extends FunctionalTestCase {
 
 # Using the Extensions
 
+The artifacts are available via Maven. Simply add them to your pom. As we add connectors, transports, etc., they will
+be available via the Mule Studio pallet.
+
 Maven Artifact:
 
 ```xml
