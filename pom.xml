@@ -669,6 +669,9 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <keyname>Confluex</keyname>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
