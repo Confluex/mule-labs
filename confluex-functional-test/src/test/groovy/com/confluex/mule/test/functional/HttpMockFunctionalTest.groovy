@@ -86,5 +86,15 @@ class HttpMockFunctionalTest extends FunctionalTestCase {
                 MediaTypeExpectation.XML,
                 new HeaderExpectation("updatedBy", "Bill Murray")
         )
+
+        // you can also get access to the raw client request data if desired
+        def requests = handler.getRequests("/catalog")
+        assert requests.size() == 1
+        assert requests[0].headers['Content-Type'] == "application/xml"
+        assert requests[0].headers['X-MULE_ENDPOINT'] == "http://localhost:9001/catalog"
+        assert requests[0].headers.updatedBy == "Bill Murray"
+        assert requests[0].method == "PUT"
+        assert requests[0].body.startsWith("<list>")
+
     }
 }

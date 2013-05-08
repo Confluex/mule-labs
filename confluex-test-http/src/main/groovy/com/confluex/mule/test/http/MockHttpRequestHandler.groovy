@@ -50,9 +50,9 @@ class MockHttpRequestHandler extends AbstractHandler {
     }
 
     void handle(String uri, HttpServletRequest request, HttpServletResponse response, int dispatch) {
-        addEvent()
         def mapping = mappings[uri] ?: defaultMapping
         mapping.render(request, response)
+        addEvent()
     }
 
     MockHttpRequestHandler verify(String uri, Expectation... expectations) {
