@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.confluex.mule</groupId>
     <artifactId>mule-parent</artifactId>
@@ -62,15 +63,11 @@
         <log4j.version>1.2.16</log4j.version>
         <sl4fj.version>1.6.1</sl4fj.version>
     </properties>
-    <!--
-    TODO add enterprise profile for EE artifacts
-    TODO add distribution management settings
-    -->
     <modules>
         <module>confluex-test-notifications</module>
         <module>confluex-test-http</module>
         <module>confluex-functional-test</module>
-  </modules>
+    </modules>
     <build>
         <testResources>
             <testResource>
@@ -578,4 +575,103 @@
             <artifactId>mockito-core</artifactId>
         </dependency>
     </dependencies>
+    <profiles>
+        <!-- for releasing to the Sonatype OSS repo (sync with central repo) -->
+        <profile>
+            <id>sonatype</id>
+            <repositories>
+                <repository>
+                    <id>sonatype-snapshots</id>
+                    <name>Sonatype OSS Maven Repo (snapshots)</name>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                </repository>
+                <repository>
+                    <id>sonatype-releases</id>
+                    <name>Sonatype OSS Maven Repo (snapshots)</name>
+                    <url>https://oss.sonatype.org/content/repositories/releases/</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                </repository>
+            </repositories>
+            <dependencies>
+                <dependency>
+                    <groupId>org.codehaus.groovy</groupId>
+                    <artifactId>groovy-all</artifactId>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.7</version>
+                        <executions>
+                            <execution>
+                                <id>groovydoc</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <!--suppress MavenModelInspection -->
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <taskdef name="groovydoc" classname="org.codehaus.groovy.ant.Groovydoc"
+                                                 classpathref="maven.compile.classpath"/>
+                                        <groovydoc destdir="${project.reporting.outputDirectory}/groovydoc"
+                                                   sourcepath="${basedir}/src/main/groovy" use="true"
+                                                   windowtitle="${project.name}" doctitle="${project.name}"/>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>2.4</version>
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <goals>
+                                    <!--suppress MavenModelInspection -->
+                                    <goal>jar</goal>
+                                </goals>
+                                <configuration>
+                                    <classesDirectory>${project.reporting.outputDirectory}/groovydoc</classesDirectory>
+                                    <classifier>javadoc</classifier>
+                                    <includes>
+                                        <include>**/*</include>
+                                    </includes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.4</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
