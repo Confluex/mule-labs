@@ -29,14 +29,16 @@
         </developer>
     </developers>
     <distributionManagement>
-        <repository>
-            <id>confluex-public-releases</id>
-            <url>http://dev.confluex.com/nexus/content/repositories/public-releases</url>
-        </repository>
         <snapshotRepository>
-            <id>confluex-public-snapshots</id>
-            <url>http://dev.confluex.com/nexus/content/repositories/public-snapshots</url>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Nexus Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -249,33 +249,31 @@ Maven Artifact:
 ```
 
 We're actively working on getting this project into the maven central repository. Until then, you can build it from
-source or artifacts may be retrieved from the Confluex maven repository.
+source or artifacts may be retrieved from the Sonatype maven repository.
 
 ```xml
-<repositories>
-	<repository>
-		<id>confluex-public-releases</id>
-		<name>Confluex Releases</name>
-		<url>http://dev.confluex.com/nexus/content/repositories/public-releases/</url>
-		<layout>default</layout>
-		<releases>
-			<enabled>true</enabled>
-		</releases>
-		<snapshots>
-			<enabled>false</enabled>
-		</snapshots>
-	</repository>
-	<repository>
-		<id>confluex-public-snapshots</id>
-		<name>Confluex Snapshots</name>
-		<url>http://dev.confluex.com/nexus/content/repositories/public-snapshots/</url>
-		<layout>default</layout>
-		<releases>
-			<enabled>false</enabled>
-		</releases>
-		<snapshots>
-			<enabled>true</enabled>
-		</snapshots>
-	</repository>
-</repositories>
+    <repositories>
+        <repository>
+            <id>sonatype-snapshots</id>
+            <name>Sonatype OSS Maven Repo (snapshots)</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>sonatype-releases</id>
+            <name>Sonatype OSS Maven Repo (snapshots)</name>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
 ```
