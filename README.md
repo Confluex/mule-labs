@@ -12,6 +12,7 @@ the API until it reaches 1.0 status. Of course, we'll try to keep breaking chang
 * [Module: confluex-test-http] (#confluex-test-http)
 * [Module: confluex-test-notifications] (#confluex-test-notifications)
 * [Using the Extensions] (#using-the-extensions)
+* [License] (#License)
 
 **Groovy Examples**
 
@@ -266,3 +267,19 @@ source or artifacts may be retrieved from the Sonatype maven repository.
         </repository>
     </repositories>
 ```
+
+# License
+
+   Copyright 2012 Mike Cantrell
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
