@@ -1,11 +1,14 @@
 package com.confluex.mule.test.http
 
 import com.confluex.mule.test.http.captor.DefaultRequestCaptor
+import com.confluex.mule.test.http.captor.RequestCaptor
+import com.confluex.mule.test.http.event.EventLatch
 import org.junit.Before
 import org.junit.Test
 import org.springframework.core.io.ClassPathResource
 import org.springframework.core.io.Resource
 import org.springframework.mock.web.MockHttpServletRequest
+import org.springframework.mock.web.MockHttpServletResponse
 
 import static org.mockito.Mockito.*
 
@@ -15,7 +18,7 @@ class MockHttpRequestHandlerTest {
 
     @Before
     void createMapping() {
-        handler = new MockHttpRequestHandler()
+        handler = new MockHttpRequestHandler(eventLatch: mock(EventLatch))
     }
 
     @Test
@@ -110,5 +113,16 @@ class MockHttpRequestHandlerTest {
         assert handler.getRequests("/a") == a
         assert handler.getRequests("/b") == b
         assert handler.getRequests("/other") == other
+    }
+
+    @Test
+    void shouldDelegateUriRequestToMappedCaptor() {
+        def captor = mock(RequestCaptor)
+        handler.mappings["/a/b/c"] = captor
+        def request = new MockHttpServletRequest()
+        def response = new MockHttpServletResponse()
+        handler.handle("/a/b/c", request, response, 1)
+        verify(captor).render(request, response)
+        verify(handler.eventLatch).addEvent()
     }
 }

@@ -3,6 +3,7 @@ package com.confluex.mule.test.http
 import com.confluex.mule.test.http.captor.DefaultRequestCaptor
 import com.confluex.mule.test.http.captor.RequestCaptor
 import com.confluex.mule.test.http.event.DefaultEventLatch
+import com.confluex.mule.test.http.event.EventLatch
 import com.confluex.mule.test.http.expectations.Expectation
 import org.mortbay.jetty.handler.AbstractHandler
 import org.springframework.core.io.ClassPathResource
@@ -13,11 +14,14 @@ import javax.servlet.http.HttpServletResponse
 
 import static org.junit.Assert.*
 
-@Mixin(DefaultEventLatch)
-class MockHttpRequestHandler extends AbstractHandler {
+class MockHttpRequestHandler extends AbstractHandler implements EventLatch {
     RequestCaptor currentMapping;
     RequestCaptor defaultMapping = new DefaultRequestCaptor()
     Map<String, RequestCaptor> mappings = [:]
+
+    @SuppressWarnings("GroovyUnusedDeclaration")
+    @Delegate
+    EventLatch eventLatch = new DefaultEventLatch()
 
     MockHttpRequestHandler when(String uri) {
         currentMapping = new DefaultRequestCaptor()
