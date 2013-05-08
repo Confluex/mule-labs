@@ -270,7 +270,7 @@ source or artifacts may be retrieved from the Sonatype maven repository.
 
 # License
 
-   Copyright 2012 Mike Cantrell
+   Copyright 2013 Confluex, Inc.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
