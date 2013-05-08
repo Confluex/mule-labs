@@ -13,6 +13,11 @@ the API until it reaches 1.0 status. Of course, we'll try to keep breaking chang
 * [Module: confluex-test-notifications] (#confluex-test-notifications)
 * [Using the Extensions] (#using-the-extensions)
 
+**Groovy Examples**
+
+Most of the examples documented here are using Groovy instead of Java. Feel free to use Java if you wish. There is
+no Groovy requirement (your Mule container comes with Groovy and you should really check it out though!).
+
 ## confluex-test-http
 
 Mock HTTP testing library for mocking out interaction to HTTP endpoints from within Mule FunctionalTestCase (although
