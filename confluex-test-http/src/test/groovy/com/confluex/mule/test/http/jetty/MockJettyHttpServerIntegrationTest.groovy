@@ -59,12 +59,6 @@ class MockJettyHttpServerIntegrationTest {
                     .post(String.class, '{"count":1}')
             assert json == this.class.getResourceAsStream("/http/responses/bar.json").text
         }
-        10.times {
-            def txt = Client.create().resource("http://localhost:9001/random")
-                    .type(MediaType.TEXT_PLAIN)
-                    .put(String.class, "hi")
-            assert txt == "ok"
-        }
 
         handler.verify("/foo", MethodExpectation.GET, MediaTypeExpectation.XML)
         handler.verify("/bar",
@@ -82,11 +76,6 @@ class MockJettyHttpServerIntegrationTest {
             assert it.headers["Accept"] == "application/xml"
         }
 
-
         assert handler.getRequests("/bar").size() == 3
-        assert handler.getRequests("/random").size() == 10
-
     }
-
-
 }

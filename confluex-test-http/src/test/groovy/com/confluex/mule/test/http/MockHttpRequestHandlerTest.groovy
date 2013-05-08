@@ -101,22 +101,17 @@ class MockHttpRequestHandlerTest {
                 new ClientRequest(mock(MockHttpServletRequest)),
                 new ClientRequest(mock(MockHttpServletRequest))
         ]
-        def other = [
-                new ClientRequest(mock(MockHttpServletRequest))
-        ]
-        handler.defaultMapping = new DefaultRequestCaptor(requests: other)
 
         handler.mappings["/a"] = new DefaultRequestCaptor(requests:  a)
         handler.mappings["/b"] = new DefaultRequestCaptor(requests:  b)
-        handler.mappings["/other"] = new DefaultRequestCaptor(requests:  other)
 
         assert handler.getRequests("/a") == a
         assert handler.getRequests("/b") == b
-        assert handler.getRequests("/other") == other
+        assert handler.getRequests("/other") == []
     }
 
     @Test
-    void shouldDelegateUriRequestToMappedCaptor() {
+    void shouldDelegateUriRequestHandlingToMappedCaptor() {
         def captor = mock(RequestCaptor)
         handler.mappings["/a/b/c"] = captor
         def request = new MockHttpServletRequest()
@@ -124,5 +119,10 @@ class MockHttpRequestHandlerTest {
         handler.handle("/a/b/c", request, response, 1)
         verify(captor).render(request, response)
         verify(handler.eventLatch).addEvent()
+    }
+
+    @Test(expected = IllegalArgumentException)
+    void shouldErrorIfRequestHandlerIsCalledForUnmappedUri() {
+        handler.handle("/a/b/c", new MockHttpServletRequest(), new MockHttpServletResponse(), 1)
     }
 }

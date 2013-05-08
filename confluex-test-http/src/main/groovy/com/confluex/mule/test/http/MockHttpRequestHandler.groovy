@@ -16,7 +16,6 @@ import static org.junit.Assert.*
 
 class MockHttpRequestHandler extends AbstractHandler implements EventLatch {
     RequestCaptor currentMapping;
-    RequestCaptor defaultMapping = new DefaultRequestCaptor()
     Map<String, RequestCaptor> mappings = [:]
 
     @SuppressWarnings("GroovyUnusedDeclaration")
@@ -54,7 +53,10 @@ class MockHttpRequestHandler extends AbstractHandler implements EventLatch {
     }
 
     void handle(String uri, HttpServletRequest request, HttpServletResponse response, int dispatch) {
-        def mapping = mappings[uri] ?: defaultMapping
+        def mapping = mappings[uri]
+        if (!mapping) {
+            throw new IllegalArgumentException("No captor mapped to uri: ${uri}")
+        }
         mapping.render(request, response)
         addEvent()
     }
@@ -72,7 +74,7 @@ class MockHttpRequestHandler extends AbstractHandler implements EventLatch {
     }
 
     List<ClientRequest> getRequests(String uri) {
-        return mappings[uri]?.requests ?: defaultMapping.requests
+        return mappings[uri]?.requests ?: []
     }
 
 }
