@@ -107,19 +107,28 @@ We're actively working on getting this project into the maven central repository
 source or artifacts may be retrieved from the Sonatype maven repository.
 
 ```xml
-    <repositories>
-        <repository>
-            <id>sonatype-public</id>
-            <name>Sonatype OSS Maven Repo (snapshots)</name>
-            <url>https://oss.sonatype.org/content/groups/public</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-    </repositories>
+    <repository>
+        <id>sonatype-snapshots</id>
+        <name>Sonatype OSS Maven Repo (snapshots)</name>
+        <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+        <releases>
+            <enabled>false</enabled>
+        </releases>
+    </repository>
+    <repository>
+        <id>sonatype-releases</id>
+        <name>Sonatype OSS Maven Repo (releases)</name>
+        <url>https://oss.sonatype.org/content/repositories/releases/</url>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+    </repository>
 ```
 
 # License
