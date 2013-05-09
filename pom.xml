@@ -67,7 +67,6 @@
     </properties>
     <modules>
         <module>confluex-test-notifications</module>
-        <module>confluex-test-http</module>
         <module>confluex-functional-test</module>
     </modules>
     <build>
