@@ -11,7 +11,10 @@
 
 
     <spring:beans>
-        <spring:bean id="endpointLogger" class="com.confluex.mule.test.event.LoggingEndpointListener"/>
+        <spring:bean id="endpointLogger" class="com.confluex.mule.test.event.LoggingEndpointListener">
+            <spring:property name="delimiter" value="|"/>
+            <spring:property name="minLastSeen" value="100"/>
+        </spring:bean>
     </spring:beans>
 
     <notifications dynamic="true">
