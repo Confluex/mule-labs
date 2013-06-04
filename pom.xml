@@ -522,6 +522,12 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
+                <groupId>com.cyrusinnovation</groupId>
+                <artifactId>mockito-groovy-support</artifactId>
+                <version>1.2</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.activemq</groupId>
                 <artifactId>activemq-broker</artifactId>
                 <version>5.8.0</version>
@@ -574,6 +580,10 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cyrusinnovation</groupId>
+            <artifactId>mockito-groovy-support</artifactId>
         </dependency>
     </dependencies>
     <profiles>
