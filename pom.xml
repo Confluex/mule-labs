@@ -581,10 +581,6 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.cyrusinnovation</groupId>
-            <artifactId>mockito-groovy-support</artifactId>
-        </dependency>
     </dependencies>
     <profiles>
         <!-- for releasing to the Sonatype OSS repo (sync with central repo) -->
