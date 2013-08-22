@@ -10,9 +10,9 @@
     <description>Provides dependency and build settings for Confluex Mule projects</description>
     <url>https://github.com/Confluex/confluex-mule-extensions</url>
     <scm>
-        <url>git@github.com:Confluex/confluex-mule-extensions.git</url>
-        <connection>git@github.com:Confluex/confluex-mule-extensions.git</connection>
-        <developerConnection>git@github.com:Confluex/confluex-mule-extensions.git</developerConnection>
+        <url>scm:git@github.com:Confluex/confluex-mule-extensions.git</url>
+        <connection>scm:git@github.com:Confluex/confluex-mule-extensions.git</connection>
+        <developerConnection>scm:git@github.com:Confluex/confluex-mule-extensions.git</developerConnection>
     </scm>
     <licenses>
         <license>
