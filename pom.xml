@@ -231,6 +231,13 @@
     </build>
     <dependencyManagement>
         <dependencies>
+            <!-- Confluex -->
+            <dependency>
+                <groupId>com.confluex</groupId>
+                <artifactId>confluex-mock-http</artifactId>
+                <version>0.4.2</version>
+            </dependency>
+
             <!-- Mule Dependencies -->
             <dependency>
                 <groupId>org.mule</groupId>
