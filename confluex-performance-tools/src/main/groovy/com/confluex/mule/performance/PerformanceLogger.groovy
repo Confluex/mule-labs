@@ -1,4 +1,4 @@
-package com.confluex.mule.test.event
+package com.confluex.mule.performance
 
 import org.mule.api.context.notification.EndpointMessageNotificationListener
 import org.mule.context.notification.EndpointMessageNotification
@@ -12,7 +12,7 @@ import java.util.concurrent.locks.ReentrantLock
  * Adds some simple logging around endpoint notifications to help diagnose activity and performance problems.
  */
 
-class LoggingEndpointListener implements EndpointMessageNotificationListener<EndpointMessageNotification> {
+class PerformanceLogger implements EndpointMessageNotificationListener<EndpointMessageNotification> {
     Logger log = LoggerFactory.getLogger(this.class)
     String endpointName
     Boolean logPayload = false

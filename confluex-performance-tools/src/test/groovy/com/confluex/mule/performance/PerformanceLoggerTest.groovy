@@ -1,4 +1,4 @@
-package com.confluex.mule.test.event
+package com.confluex.mule.performance
 
 import org.junit.Before
 import org.junit.Test
@@ -9,8 +9,8 @@ import org.slf4j.Logger
 
 import static org.mockito.Mockito.*
 
-class LoggingEndpointListenerTest {
-    LoggingEndpointListener listener
+class PerformanceLoggerTest {
+    PerformanceLogger listener
     MuleMessage message
     EndpointMessageNotification notification
     FlowConstruct flow
@@ -18,7 +18,7 @@ class LoggingEndpointListenerTest {
 
     @Before
     void createListener() {
-        listener = new LoggingEndpointListener(log: mock(Logger))
+        listener = new PerformanceLogger(log: mock(Logger))
         notification = mock(EndpointMessageNotification)
         message = mock(MuleMessage)
         flow = mock(FlowConstruct)

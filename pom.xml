@@ -3,15 +3,15 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.confluex.mule</groupId>
     <artifactId>mule-parent</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Confluex: Mule Parent Pom</name>
     <description>Provides dependency and build settings for Confluex Mule projects</description>
     <url>https://github.com/Confluex/confluex-mule-extensions</url>
     <scm>
-        <url>git@github.com:Confluex/confluex-mule-extensions.git</url>
-        <connection>git@github.com:Confluex/confluex-mule-extensions.git</connection>
-        <developerConnection>git@github.com:Confluex/confluex-mule-extensions.git</developerConnection>
+        <url>scm:git:git@github.com:Confluex/confluex-mule-extensions.git</url>
+        <connection>scm:git:git@github.com:Confluex/confluex-mule-extensions.git</connection>
+        <developerConnection>scm:git:git@github.com:Confluex/confluex-mule-extensions.git</developerConnection>
     </scm>
     <licenses>
         <license>
@@ -191,6 +191,38 @@
                         </classpathContainer>
                     </classpathContainers>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- certain IDEs and Plugins (such as attach sources) will not work unless this is specifically added  -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/groovy</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

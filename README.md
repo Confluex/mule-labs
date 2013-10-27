@@ -110,12 +110,11 @@ Maven Artifact:
 <dependency>
     <groupId>com.confluex.mule</groupId>
     <artifactId>confluex-test-notifications</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
 </dependency>
 ```
 
-We're actively working on getting this project into the maven central repository. Until then, you can build it from
-source or artifacts may be retrieved from the Sonatype maven repository.
+For Snapshots, you can use the Sonatype OSS repository:
 
 ```xml
     <repository>
@@ -127,17 +126,6 @@ source or artifacts may be retrieved from the Sonatype maven repository.
         </snapshots>
         <releases>
             <enabled>false</enabled>
-        </releases>
-    </repository>
-    <repository>
-        <id>sonatype-releases</id>
-        <name>Sonatype OSS Maven Repo (releases)</name>
-        <url>https://oss.sonatype.org/content/repositories/releases/</url>
-        <snapshots>
-            <enabled>false</enabled>
-        </snapshots>
-        <releases>
-            <enabled>true</enabled>
         </releases>
     </repository>
 ```

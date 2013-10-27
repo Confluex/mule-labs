@@ -1,4 +1,4 @@
-package com.confluex.mule.test.event;
+package com.confluex.mule.performance;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Aspect
-public class LoggingMessageProcessorAspect {
+public class PerformanceLoggerAspect {
     Integer threshHold = 20;
     Logger log = LoggerFactory.getLogger(this.getClass());
 
