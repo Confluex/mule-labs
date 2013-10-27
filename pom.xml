@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.confluex.mule</groupId>
     <artifactId>mule-parent</artifactId>
@@ -67,9 +68,9 @@
     </properties>
     <modules>
         <module>confluex-test-notifications</module>
+        <module>confluex-performance-tools</module>
         <module>confluex-functional-test</module>
-    <module>confluex-performance-tools</module>
-  </modules>
+    </modules>
     <build>
         <testResources>
             <testResource>
@@ -148,7 +149,9 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <configuration>
-                        <argLine>-javaagent:${env.HOME}/.m2/repository/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar</argLine>
+                        <argLine>
+                            -javaagent:${env.HOME}/.m2/repository/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+                        </argLine>
                         <systemProperties>
                             <property>
                                 <name>aj.weaving.verbose</name>
@@ -711,8 +714,11 @@
                                 </goals>
                                 <configuration>
                                     <target>
-                                        <taskdef name="groovydoc" classname="org.codehaus.groovy.ant.Groovydoc" classpathref="maven.compile.classpath"/>
-                                        <groovydoc destdir="${project.reporting.outputDirectory}/groovydoc" sourcepath="${basedir}/src/main/groovy" use="true" windowtitle="${project.name}" doctitle="${project.name}"/>
+                                        <taskdef name="groovydoc" classname="org.codehaus.groovy.ant.Groovydoc"
+                                                 classpathref="maven.compile.classpath"/>
+                                        <groovydoc destdir="${project.reporting.outputDirectory}/groovydoc"
+                                                   sourcepath="${basedir}/src/main/groovy" use="true"
+                                                   windowtitle="${project.name}" doctitle="${project.name}"/>
                                     </target>
                                 </configuration>
                             </execution>

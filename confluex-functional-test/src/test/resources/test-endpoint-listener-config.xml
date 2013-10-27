@@ -11,7 +11,7 @@
 
 
     <spring:beans>
-        <spring:bean id="endpointLogger" class="com.confluex.mule.test.event.LoggingEndpointListener">
+        <spring:bean id="endpointLogger" class="com.confluex.mule.performance.PerformanceLogger">
             <spring:property name="delimiter" value="|"/>
             <spring:property name="minLastSeen" value="100"/>
         </spring:bean>
