@@ -1,16 +1,12 @@
 package com.confluex.mule.test.functional
 
 import com.confluex.mock.http.MockHttpServer
-import com.confluex.mock.http.expectations.HeaderExpectation
-import com.confluex.mock.http.expectations.MethodExpectation
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.mule.tck.junit4.FunctionalTestCase
 
-import static javax.servlet.http.HttpServletResponse.*
 import static com.confluex.mock.http.matchers.HttpMatchers.*
-import static org.hamcrest.Matchers.*
 
 class HttpMockFunctionalTest extends FunctionalTestCase {
 
@@ -78,9 +74,8 @@ class HttpMockFunctionalTest extends FunctionalTestCase {
         // the request or times out (error condition)
         assert server.waitFor(put("/catalog"), 1, 10000)
 
-
         // you can also get access to the raw client request data if desired
-        def requests = server.requests.findAll { it.path == "/catalog" && it.method == "PUT"}
+        def requests = server.requests.findAll { it.path == "/catalog" && it.method == "PUT" }
         assert requests.size() == 1
         assert requests[0].headers['Content-Type'] == "application/xml"
         assert requests[0].headers['X-MULE_ENDPOINT'] == "http://localhost:9001/catalog"
