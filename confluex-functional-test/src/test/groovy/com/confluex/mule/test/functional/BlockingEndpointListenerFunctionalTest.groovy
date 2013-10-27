@@ -16,7 +16,7 @@ class BlockingEndpointListenerFunctionalTest extends FunctionalTestCase {
         def listener = new BlockingEndpointListener("out")
         muleContext.registerListener(listener)
         muleContext.client.dispatch("in", "Bacon", [:])
-        assert listener.waitForMessage()
+        assert listener.waitForMessages()
         assert listener.messages.first().payloadAsString == 'Bacon'
     }
 
@@ -25,7 +25,7 @@ class BlockingEndpointListenerFunctionalTest extends FunctionalTestCase {
         def listener = new BlockingEndpointListener("out", 2)
         muleContext.registerListener(listener)
         muleContext.client.dispatch("in", "Bacon", [:])
-        assert !listener.waitForMessage(2000)
+        assert !listener.waitForMessages(2000)
         assert listener.messages.first().payloadAsString == 'Bacon'
     }
 }

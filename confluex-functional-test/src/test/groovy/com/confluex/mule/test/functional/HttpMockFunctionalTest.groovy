@@ -49,7 +49,7 @@ class HttpMockFunctionalTest extends FunctionalTestCase {
         def message = muleContext.client.send("requestCatalog", "", [:])
         assert message.payloadAsString == this.class.getResourceAsStream("/payloads/catalog.xml").text
 
-        def requests = server.requests?.findAll { it.method == "GET" && it.path == "/payloads/catalog.xml" }
+        def requests = server.requests?.findAll { it.method == "GET" && it.path == "/catalog" }
         assert requests.size() == 1
     }
 
