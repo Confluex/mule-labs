@@ -2,14 +2,15 @@
 
 # Confluex Mule Extensions
 
-This is a library of extension to Mule code. It contains utility code for testing, etc.
+This is a sandbox which we use to test and enhance ideas for libraries for Mule extensions. If they mature, they will
+be promoted to a top level project or as a pull request into the Mule project itself.
 
-This library is still under heavy development. Feel free to use, contribute but there could be changes to
-the API until it reaches 1.0 status. Of course, we'll try to keep breaking changes to a minimum.
+Until then, feel free to use them. We'll try to keep breaking changes to a minimum.
 
 **Table of Contents**
 
 * [Module: confluex-test-notifications] (#confluex-test-notifications)
+* [Module: confluex-test-notifications] (#confluex-performance-tools)
 * [Using the Extensions] (#using-the-extensions)
 * [License] (#License)
 
@@ -18,7 +19,7 @@ the API until it reaches 1.0 status. Of course, we'll try to keep breaking chang
 Most of the examples documented here are using Groovy instead of Java. Feel free to use Java if you wish. There is
 no Groovy requirement (your Mule container comes with Groovy and you should really check it out though!).
 
-## confluex-test-notifications
+# confluex-test-notifications
 
 Since the MuleFunctionalTest runs in a separate thread from the server, it's often
 difficult to determine when the messages are finished and when to start your assertions (usually by waiting or
@@ -87,6 +88,16 @@ class BlockingEndpointListenerFunctionalTest extends FunctionalTestCase {
     }
 }
 ```
+
+# confluex-performance-tools
+
+Initially, we're providing instrumentation to show visibility into mule message processor (and hopefully other
+internals) performance.
+
+**Example**
+
+TODO (see tests for now)
+
 
 # Using the Extensions
 
