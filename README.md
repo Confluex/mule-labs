@@ -64,17 +64,26 @@ _Functional Test Case_
 ```groovy
 class BlockingEndpointListenerFunctionalTest extends FunctionalTestCase {
 
-    @Override
-    protected String getConfigResources() {
-        return "test-endpoint-listener-config.xml"
-    }
-
     @Test
     void shouldWaitForSingleMessage() {
         def listener = new BlockingEndpointListener("out")
         muleContext.registerListener(listener)
         muleContext.client.dispatch("in", "Bacon", [:])
-        assert listener.waitForMessage()
+        assert listener.waitForMessages()
+        assert listener.messages.size() == 1
+        assert listener.messages.first().payloadAsString == 'Bacon'
+    }
+
+    @Test
+    void shouldWaitForMultipleMessages() {
+        def listener = new BlockingEndpointListener("out", 10)
+        muleContext.registerListener(listener)
+        10.times {
+            muleContext.client.dispatch("in", "Bacon", [:])
+        }
+
+        assert listener.waitForMessages()
+        assert listener.messages.size() == 10
         assert listener.messages.first().payloadAsString == 'Bacon'
     }
 
@@ -83,7 +92,7 @@ class BlockingEndpointListenerFunctionalTest extends FunctionalTestCase {
         def listener = new BlockingEndpointListener("out", 2)
         muleContext.registerListener(listener)
         muleContext.client.dispatch("in", "Bacon", [:])
-        assert !listener.waitForMessage(2000)
+        assert !listener.waitForMessages(2000)
         assert listener.messages.first().payloadAsString == 'Bacon'
     }
 }
