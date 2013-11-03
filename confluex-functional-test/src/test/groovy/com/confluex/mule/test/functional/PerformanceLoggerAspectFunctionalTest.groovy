@@ -48,6 +48,8 @@ class PerformanceLoggerAspectFunctionalTest extends FunctionalTestCase {
         assert setPayloadTransformers.hits >= 4
         assert outboxEndpoints.hits >= 4
 
+        assert  outboxEndpoints.avg < 25
+
         def report = Client.create().resource("http://localhost:9138/performance").get(String.class)
         def xml = new XmlSlurper().parseText(report)
         assert xml.th.size() >= 17

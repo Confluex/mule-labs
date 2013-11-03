@@ -39,7 +39,7 @@ Create your aspectJ configuration file. This is where you tell it what packages 
 </aspectj>
 ```
 
-You can add the dependencies to you pom::
+You can add the dependencies to you pom:
 
 ```xml
 <dependency>
@@ -95,14 +95,18 @@ Add the aspect weaver into the build **if you need to instrument from functional
 ```
 
 
-For now, use the JAMon MonitorFactory in your test cases. This will likely change in the future as we abstract
-ourselves from the API.
+For now, use the JAMon MonitorFactory in your test cases.
 
 ```groovy
 import static com.jamonapi.LogMonitor.*
 
-assert getMonitor("TestPerformanceTools.MessageProcessor.SetPayloadTransformer", "ms.").hits == 10
+def outboxEndpoints = getMonitor("TestPerformanceTools.AbstractEndpoint.outbox", "ms.")
+assert outboxEndpoints.hits = 7
+assert outboxEndpoints.avg < 25
 ```
+
+> Currently, the convention is "Flow.ClassName.name" which is not consistently derived right now. This will be refined
+> soon to offer better testing.
 
 
 
