@@ -1,0 +1,21 @@
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+">
+
+    <spring:beans>
+        <spring:bean id="performanceReport" class="com.confluex.mule.performance.PerformanceReport"/>
+    </spring:beans>
+    <flow name="PerformanceHttpService">
+        <http:inbound-endpoint host="0.0.0.0" port="9138" contentType="text/html" path="/performance"/>
+        <logger level="INFO" category="vm-flow-1" message="message received: #[payload]"/>
+        <component>
+            <spring-object bean="performanceReport"/>
+        </component>
+    </flow>
+</mule>

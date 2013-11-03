@@ -1,10 +1,13 @@
 package com.confluex.mule.test.functional
 
+import com.sun.jersey.api.client.Client
+import groovy.util.logging.Slf4j
 import org.junit.Test
 import org.mule.tck.junit4.FunctionalTestCase
 
 import static com.jamonapi.MonitorFactory.*
 
+@Slf4j
 class PerformanceLoggerAspectFunctionalTest extends FunctionalTestCase {
     protected static final String DEFAULT_JMON_UNIT = "ms."
 
@@ -38,5 +41,8 @@ class PerformanceLoggerAspectFunctionalTest extends FunctionalTestCase {
         assert foreachProcessors.hits >= 1
         assert setPayloadTransformers.hits >= 4
         assert outboxEndpoints.hits >= 4
+
+        def report = Client.create().resource("http://localhost:9138/performance").get(String.class)
+        log.info(report)
     }
 }
