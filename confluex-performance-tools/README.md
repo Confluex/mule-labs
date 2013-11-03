@@ -26,7 +26,61 @@ import static com.jamonapi.LogMonitor.*
 assert getMonitor("TestPerformanceTools.MessageProcessor.SetPayloadTransformer", "ms.").hits == 10
 ```
 
-## AspectJ Configuration
+# Maven Configuration
+
+Add the dependency to you pom:
+
+```xml
+<dependency>
+    <groupId>com.confluex.mule</groupId>
+    <artifactId>confluex-performance-tools</artifactId>
+    <version>${confluex.labs.version}</version>
+</dependency>
+```
+
+Add the aspect weaver into the build **if you need to instrument functional test cases**
+
+
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>2.16</version>
+    <configuration>
+        <argLine>
+            -javaagent:${env.HOME}/.m2/repository/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+        </argLine>
+        <systemProperties>
+            <property>
+                <name>aj.weaving.verbose</name>
+                <value>true</value>
+            </property>
+        </systemProperties>
+    </configuration>
+</plugin>
+```
+# Mule Configuration
+
+Bootstrap the mule server with the javaavgent provided by the container:
+
+> Double check the version that is provided with your Mule ditribution
+
+_MULE_HOME/conf/wrapper.conf_
+
+```ini
+wrapper.java.additional.<n>=-javaagent:%MULE_HOME%/lib/opt/aspectjweaver-1.6.11.jar
+```
+
+If you want access to the HTTP services/resports, you'll need to import the performance.xml flows from one of your
+flows:
+
+```xml
+    <spring:beans>
+        <spring:import resource="classpath:performance.xml"/>
+    </spring:beans>
+```
+
+# AspectJ Configuration
 
 This module uses AspectJ's load time weaving to instrument the Mule flow internals. You'll need to declare
 the dependencies (they're provided with the Mule contain and should be scoped as provided).
@@ -71,36 +125,6 @@ Next, you'll need to create your metadata file for AspectJ which tells it what p
 
 In order to apply the aspects, you need to start your java process with a javaagent:
 
-**Maven Tests**
-
-```xml
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-surefire-plugin</artifactId>
-    <version>2.16</version>
-    <configuration>
-        <argLine>
-            -javaagent:${env.HOME}/.m2/repository/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
-        </argLine>
-        <systemProperties>
-            <property>
-                <name>aj.weaving.verbose</name>
-                <value>true</value>
-            </property>
-        </systemProperties>
-    </configuration>
-</plugin>
-```
-
-**Mule Server**
-
-> Double check the version that is provided with your Mule ditribution
-
-MULE_HOME/conf/wrapper.conf
-
-```ini
-wrapper.java.additional.<n>=-javaagent:%MULE_HOME%/lib/opt/aspectjweaver-1.6.11.jar
-```
 
 **IDE Integration**
 
