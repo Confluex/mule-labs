@@ -35,7 +35,7 @@ the dependencies (they're provided with the Mule contain and should be scoped as
 
 __pom.xml__
 
-``xml
+`1`xml
     <dependency>
         <groupId>org.aspectj</groupId>
         <artifactId>aspectjrt</artifactId>
