@@ -16,27 +16,61 @@ http://my.mule.server:9138/performance
 
 ![Performance Report](PerformanceExcelReport.png)
 
-# Using the reports in Tests
 
-For now, use the JAMon MonitorFactory. This will likely change in the future as we abstract ourselves from the API.
-
-```groovy
-import static com.jamonapi.LogMonitor.*
-
-assert getMonitor("TestPerformanceTools.MessageProcessor.SetPayloadTransformer", "ms.").hits == 10
-```
 
 # Project Configuration
 
-If you chose, you can add the dependency to you pom for your project instead of storing it on the server:
+Create your aspectJ configuration file. This is where you tell it what packages to instrument
+
+ **MULE_HOME/conf/META-INF/aop.xml**
 
 ```xml
+<!DOCTYPE aspectj PUBLIC
+        "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<aspectj>
+    <weaver options="-showWeaveInfo -debug -verbose -XmessageHandlerClass:org.springframework.aop.aspectj.AspectJWeaverMessageHandler">
+        <include within="org.mule..*"/>
+        <include within="com.mycompany..*"/>
+    </weaver>
+    <aspects>
+        <aspect name="com.confluex.mule.performance.PerformanceLoggerAspect"/>
+        <include within="com.mycompany..*"/>
+    </aspects>
+</aspectj>
+```
+
+You can add the dependencies to you pom::
+
+```xml
+<dependency>
+    <groupId>org.aspectj</groupId>
+    <artifactId>aspectjrt</artifactId>
+    <version>${aspectj.version}</version>
+    <scope>provided</scope>
+</dependency>
+<dependency>
+    <groupId>org.aspectj</groupId>
+    <artifactId>aspectjweaver</artifactId>
+    <version>${aspectj.version}</version>
+    <scope>provided</scope>
+</dependency>
 <dependency>
     <groupId>com.confluex.mule</groupId>
     <artifactId>confluex-performance-tools</artifactId>
     <version>${confluex.labs.version}</version>
 </dependency>
 ```
+
+If you want access to the HTTP services/reports, you'll need to import the performance.xml flows from one of your
+flows:
+
+```xml
+    <spring:beans>
+        <spring:import resource="classpath:performance.xml"/>
+    </spring:beans>
+```
+
+# Automating Performance Testing
 
 Add the aspect weaver into the build **if you need to instrument from functional test cases**
 
@@ -60,14 +94,17 @@ Add the aspect weaver into the build **if you need to instrument from functional
 </plugin>
 ```
 
-If you want access to the HTTP services/resports, you'll need to import the performance.xml flows from one of your
-flows:
 
-```xml
-    <spring:beans>
-        <spring:import resource="classpath:performance.xml"/>
-    </spring:beans>
+For now, use the JAMon MonitorFactory in your test cases. This will likely change in the future as we abstract
+ourselves from the API.
+
+```groovy
+import static com.jamonapi.LogMonitor.*
+
+assert getMonitor("TestPerformanceTools.MessageProcessor.SetPayloadTransformer", "ms.").hits == 10
 ```
+
+
 
 
 # Mule Server Configuration
@@ -82,51 +119,7 @@ Bootstrap the mule server with the javaavgent provided by the container:
 wrapper.java.additional.<n>=-javaagent:%MULE_HOME%/lib/opt/aspectjweaver-1.6.11.jar
 ```
 
-
-# AspectJ Configuration
-
-This module uses AspectJ's load time weaving to instrument the Mule flow internals. You'll need to declare
-the dependencies (they're provided with the Mule contain and should be scoped as provided).
-
-> Check your MULE_HOME/lib/opt for the appropriate versions.
-
-__pom.xml__
-
-```xml
-    <dependency>
-        <groupId>org.aspectj</groupId>
-        <artifactId>aspectjrt</artifactId>
-        <version>${aspectj.version}</version>
-        <scope>provided</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.aspectj</groupId>
-        <artifactId>aspectjweaver</artifactId>
-        <version>${aspectj.version}</version>
-        <scope>provided</scope>
-    </dependency>
-```
-
-Next, you'll need to create your metadata file for AspectJ which tells it what packages to instrument:
-
- **MULE_HOME/conf/META-INF/aop.xml**
-
-```xml
-<!DOCTYPE aspectj PUBLIC
-        "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
-<aspectj>
-    <weaver options="-showWeaveInfo -debug -verbose -XmessageHandlerClass:org.springframework.aop.aspectj.AspectJWeaverMessageHandler">
-        <include within="org.mule..*"/>
-        <include within="com.mycompany..*"/>
-    </weaver>
-    <aspects>
-        <aspect name="com.confluex.mule.performance.PerformanceLoggerAspect"/>
-        <include within="com.mycompany..*"/>
-    </aspects>
-</aspectj>
-```
-
-**IDE Integration**
+# IDE Integration
 
 See your IDE documentation for setting test parameters and set the path to the aspectjweaver jar as a -javagent.
 
