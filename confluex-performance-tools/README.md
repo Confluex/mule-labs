@@ -106,7 +106,7 @@ __pom.xml__
 
 Next, you'll need to create your metadata file for AspectJ which tells it what packages to instrument:
 
- __META-INF/aop.xml__
+ **MULE_HOME/conf/META-INF/aop.xml**
 
 ```xml
 <!DOCTYPE aspectj PUBLIC
