@@ -38,7 +38,7 @@ Add the dependency to you pom:
 </dependency>
 ```
 
-Add the aspect weaver into the build **if you need to instrument functional test cases**
+Add the aspect weaver into the build **if you need to instrument from functional test cases**
 
 
 ```xml
