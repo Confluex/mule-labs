@@ -1,6 +1,5 @@
 package com.confluex.mule.performance;
 
-import org.mule.api.NamedObject;
 import org.mule.api.transformer.Transformer;
 import org.mule.endpoint.AbstractEndpoint;
 
@@ -15,10 +14,6 @@ public class ProcessorUtils {
             return getProcessorName((Transformer) processor);
         }
         return formatName("MessageProcessor", processor.getClass().getSimpleName());
-    }
-
-    public static String getProcessorName(NamedObject namedObject) {
-        return formatName("NamedObject", namedObject.getName());
     }
 
     public static String getProcessorName(AbstractEndpoint endpoint) {
