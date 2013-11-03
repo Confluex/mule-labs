@@ -12,14 +12,16 @@ internals) performance.
 
 You can download an Excel report of the performance stats via URL :
 
-[http://my.mule.server:9138/performance]
+http://my.mule.server:9138/performance
 
 # Using the reports in Tests
 
 For now, use the JAMon MonitorFactory. This will likely change in the future as we abstract ourselves from the API.
 
 ```groovy
-com.jamonapi.LogMonitor.getMonitor("TestPerformanceTools.MessageProcessor.SetPayloadTransformer", "ms.").hits == 10
+import static com.jamonapi.LogMonitor.*
+
+assert getMonitor("TestPerformanceTools.MessageProcessor.SetPayloadTransformer", "ms.").hits == 10
 ```
 
 ## AspectJ Configuration
