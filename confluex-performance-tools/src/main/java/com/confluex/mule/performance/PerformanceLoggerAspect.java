@@ -29,7 +29,7 @@ public class PerformanceLoggerAspect {
 
     protected MuleEvent captureStats(String flow, String processorName, ProceedingJoinPoint pjp) throws Throwable {
         String label = flow + "." + processorName;
-        log.info("Capturing statistics for message processor: {}", label);
+        log.debug("Capturing statistics for message processor: {}", label);
         Monitor monitor = MonitorFactory.start(label);
         MuleEvent result = null;
         try {
