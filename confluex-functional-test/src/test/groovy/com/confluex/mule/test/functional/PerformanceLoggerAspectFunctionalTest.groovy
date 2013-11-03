@@ -52,6 +52,5 @@ class PerformanceLoggerAspectFunctionalTest extends FunctionalTestCase {
         def xml = new XmlSlurper().parseText(report)
         assert xml.th.size() >= 17
         assert xml.tr.size() >= 60
-        Thread.sleep(10000000)
     }
 }
