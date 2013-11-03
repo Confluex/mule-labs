@@ -24,14 +24,14 @@ no Groovy requirement (your Mule container comes with Groovy and you should real
 
 Mule Testing utilities, etc.
 
-[Learn More](confluex-test-notifications)
+[Learn Confluex Test Notifications](confluex-test-notifications)
 
 *confluex-performance-tools*
 
 Initially, we're providing instrumentation to show visibility into mule message processor (and hopefully other
 internals) performance.
 
-[Learn More](confluex-performance-tools)
+[Learn Confluex Performance Tools](confluex-performance-tools)
 
 
 # Using the Extensions
