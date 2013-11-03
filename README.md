@@ -10,7 +10,7 @@ Until then, feel free to use them. We'll try to keep breaking changes to a minim
 **Table of Contents**
 
 * [Module: confluex-test-notifications] (#confluex-test-notifications)
-* [Module: confluex-test-notifications] (#confluex-performance-tools)
+* [Module: confluex-performance-tools] (#confluex-performance-tools)
 * [Using the Extensions] (#using-the-extensions)
 * [License] (#License)
 
