@@ -20,7 +20,7 @@ no Groovy requirement (your Mule container comes with Groovy and you should real
 
 # Modules
 
-*confluex-test-notifications(
+*confluex-test-notifications*
 
 Mule Testing utilities, etc.
 
@@ -45,7 +45,13 @@ Maven Artifact:
 <dependency>
     <groupId>com.confluex.mule</groupId>
     <artifactId>confluex-test-notifications</artifactId>
-    <version>0.1.0</version>
+    <version>${confluex.labs.version}</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>com.confluex.mule</groupId>
+    <artifactId>confluex-performance-tools</artifactId>
+    <version>${confluex.labs.version}</version>
 </dependency>
 ```
 
