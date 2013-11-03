@@ -28,6 +28,7 @@ public class PerformanceLoggerAspect {
     }
 
     protected MuleEvent captureStats(String flow, String processorName, ProceedingJoinPoint pjp) throws Throwable {
+        // TODO research jamon api to see if we can add meta data instead of scoping into the label
         String label = flow + "." + processorName;
         log.debug("Capturing statistics for message processor: {}", label);
         Monitor monitor = MonitorFactory.start(label);

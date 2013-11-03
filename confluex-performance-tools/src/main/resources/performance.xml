@@ -12,10 +12,12 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
         <spring:bean id="performanceReport" class="com.confluex.mule.performance.PerformanceReport"/>
     </spring:beans>
     <flow name="PerformanceHttpService">
-        <http:inbound-endpoint host="0.0.0.0" port="9138" contentType="text/html" path="/performance"/>
-        <logger level="INFO" category="vm-flow-1" message="message received: #[payload]"/>
+        <http:inbound-endpoint host="0.0.0.0" port="9138" path="/performance"/>
         <component>
             <spring-object bean="performanceReport"/>
         </component>
+        <!-- this is really just an HTML table for now. Soon, we'll update this to support JSON and HTML) -->
+        <set-property propertyName="Content-Disposition" value="filename=performance.xls"/>
+        <http:response-builder contentType="application/vnd.ms-excel"/>
     </flow>
 </mule>
