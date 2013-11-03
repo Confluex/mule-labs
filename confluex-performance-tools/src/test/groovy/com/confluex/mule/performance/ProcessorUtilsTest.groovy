@@ -5,11 +5,16 @@ import org.mule.api.NamedObject
 import org.mule.api.transformer.Transformer
 import org.mule.endpoint.AbstractEndpoint
 
-import static org.mockito.Mockito.mock
-import static org.mockito.Mockito.when
-
+import static org.mockito.Mockito.*
 
 class ProcessorUtilsTest {
+
+
+    @Test
+    void shouldFormatUnknownMessageProcessorTypes() {
+        assert ProcessorUtils.resolveProcessorName(new Object()) == "[MessageProcessor] Object"
+    }
+
     @Test
     void shouldFormatAbstractEndpointProcessors() {
         def endpoint = mock(AbstractEndpoint)

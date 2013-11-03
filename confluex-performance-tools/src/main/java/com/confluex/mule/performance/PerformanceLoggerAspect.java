@@ -31,7 +31,7 @@ public class PerformanceLoggerAspect {
         return captureStats(ProcessorUtils.resolveProcessorName(endpoint), pjp);
     }
 
-    protected MuleEvent captureStats(String name,  ProceedingJoinPoint pjp) throws Throwable {
+    protected MuleEvent captureStats(String name, ProceedingJoinPoint pjp) throws Throwable {
         log.info("Capturing statistics for message processor: {}", name);
         Monitor monitor = MonitorFactory.start(name);
         MuleEvent result = null;
