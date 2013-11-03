@@ -623,11 +623,13 @@
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjrt</artifactId>
                 <version>${aspectj.version}</version>
+                <scope>${container.scope}</scope>
             </dependency>
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
                 <version>${aspectj.version}</version>
+                <scope>${container.scope}</scope>
             </dependency>
             <dependency>
                 <groupId>com.jamonapi</groupId>
