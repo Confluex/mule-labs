@@ -26,9 +26,9 @@ import static com.jamonapi.LogMonitor.*
 assert getMonitor("TestPerformanceTools.MessageProcessor.SetPayloadTransformer", "ms.").hits == 10
 ```
 
-# Maven Configuration
+# Project Configuration
 
-Add the dependency to you pom:
+If you chose, you can add the dependency to you pom for your project instead of storing it on the server:
 
 ```xml
 <dependency>
@@ -59,7 +59,18 @@ Add the aspect weaver into the build **if you need to instrument from functional
     </configuration>
 </plugin>
 ```
-# Mule Configuration
+
+If you want access to the HTTP services/resports, you'll need to import the performance.xml flows from one of your
+flows:
+
+```xml
+    <spring:beans>
+        <spring:import resource="classpath:performance.xml"/>
+    </spring:beans>
+```
+
+
+# Mule Server Configuration
 
 Bootstrap the mule server with the javaavgent provided by the container:
 
@@ -71,14 +82,6 @@ Bootstrap the mule server with the javaavgent provided by the container:
 wrapper.java.additional.<n>=-javaagent:%MULE_HOME%/lib/opt/aspectjweaver-1.6.11.jar
 ```
 
-If you want access to the HTTP services/resports, you'll need to import the performance.xml flows from one of your
-flows:
-
-```xml
-    <spring:beans>
-        <spring:import resource="classpath:performance.xml"/>
-    </spring:beans>
-```
 
 # AspectJ Configuration
 
@@ -122,9 +125,6 @@ Next, you'll need to create your metadata file for AspectJ which tells it what p
     </aspects>
 </aspectj>
 ```
-
-In order to apply the aspects, you need to start your java process with a javaagent:
-
 
 **IDE Integration**
 
