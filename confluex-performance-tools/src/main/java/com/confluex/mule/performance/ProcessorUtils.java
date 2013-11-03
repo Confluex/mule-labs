@@ -14,9 +14,6 @@ public class ProcessorUtils {
         if (processor instanceof Transformer) {
             return getProcessorName((Transformer) processor);
         }
-        if (processor instanceof NamedObject) {
-            return getProcessorName((NamedObject) processor);
-        }
         return formatName("MessageProcessor", processor.getClass().getSimpleName());
     }
 

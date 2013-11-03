@@ -1,7 +1,6 @@
 package com.confluex.mule.performance
 
 import org.junit.Test
-import org.mule.api.NamedObject
 import org.mule.api.transformer.Transformer
 import org.mule.endpoint.AbstractEndpoint
 
@@ -20,13 +19,6 @@ class ProcessorUtilsTest {
         def endpoint = mock(AbstractEndpoint)
         when(endpoint.getName()).thenReturn("foo")
         assert ProcessorUtils.resolveProcessorName(endpoint) == "[AbstractEndpoint] foo"
-    }
-
-    @Test
-    void shouldFormatNamedObjectProcessors() {
-        def endpoint = mock(NamedObject)
-        when(endpoint.getName()).thenReturn("foo")
-        assert ProcessorUtils.resolveProcessorName(endpoint) == "[NamedObject] foo"
     }
 
     @Test

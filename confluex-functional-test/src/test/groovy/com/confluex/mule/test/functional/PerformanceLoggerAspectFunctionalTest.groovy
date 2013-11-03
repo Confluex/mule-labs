@@ -26,19 +26,18 @@ class PerformanceLoggerAspectFunctionalTest extends FunctionalTestCase {
             def msg = client.request("outbox", 5000)
             assert payload.find { "Hello ${it}" == msg.payloadAsString }
         }
-        def namedObjects = getMonitor("[NamedObject] null", "ms.")
         def transformers = getMonitor("[Transformer] SetPayloadTransformer", "ms.")
         def inboxEndpoints = getMonitor("[AbstractEndpoint] inbox", "ms.")
         def outboxEndpoints = getMonitor("[AbstractEndpoint] outbox", "ms.")
+        def foreachProcessors = getMonitor("[MessageProcessor] Foreach", "ms.")
         def outboundTimeoutProcessors = getMonitor("[MessageProcessor] OutboundEventTimeoutMessageProcessor", "ms.")
 
-        // TODO Needs refactor. when ran as a suite, these values will be larger due to the monitoring of all flows.
-        assert namedObjects.hits >= 32
+        // TODO Needs isolation. When ran as a suite, these values will be larger due to the monitoring of all flows.
         assert inboxEndpoints.hits >= 1
+        assert foreachProcessors.hits >= 1
         assert transformers.hits >= 4
         assert outboxEndpoints.hits >= 4
         assert outboundTimeoutProcessors.hits >= 5
-//        assert namedObjects.hits == 32
 //        assert inboxEndpoints.hits == 1
 //        assert transformers.hits == 4
 //        assert outboxEndpoints.hits == 4
