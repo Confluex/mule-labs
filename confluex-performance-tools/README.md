@@ -5,6 +5,23 @@
 Initially, we're providing instrumentation to show visibility into mule message processor (and hopefully other
 internals) performance.
 
+# Viewing the Report
+
+> We'll be offering JSON and HTML version of this report. For now, it's just an HTML table dump of statistics
+> provided by JAMon's MonitorFactory.getReport. Look for this soon
+
+You can download an Excel report of the performance stats via URL :
+
+[http://my.mule.server:9138/performance]
+
+# Using the reports in Tests
+
+For now, use the JAMon MonitorFactory. This will likely change in the future as we abstract ourselves from the API.
+
+```groovy
+com.jamonapi.LogMonitor.getMonitor("TestPerformanceTools.MessageProcessor.SetPayloadTransformer", "ms.").hits == 10
+```
+
 ## AspectJ Configuration
 
 This module uses AspectJ's load time weaving to instrument the Mule flow internals. You'll need to declare
