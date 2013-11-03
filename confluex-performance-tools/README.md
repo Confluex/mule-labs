@@ -65,7 +65,7 @@ Bootstrap the mule server with the javaavgent provided by the container:
 
 > Double check the version that is provided with your Mule ditribution
 
-_MULE_HOME/conf/wrapper.conf_
+**MULE_HOME/conf/wrapper.conf**
 
 ```ini
 wrapper.java.additional.<n>=-javaagent:%MULE_HOME%/lib/opt/aspectjweaver-1.6.11.jar
