@@ -27,7 +27,7 @@ public class PerformanceLoggerAspect {
     }
 
     @Around(value = "call(public * org.mule.api.transformer.Transformer+.transform(..)) && target(endpoint) && args(msg)", argNames = "pjp,msg,endpoint")
-    public MuleEvent captureEndpointStats(ProceedingJoinPoint pjp, Object msg, Transformer endpoint) throws Throwable {
+    public MuleEvent captureTransformerStats(ProceedingJoinPoint pjp, Object msg, Transformer endpoint) throws Throwable {
         return captureStats(ProcessorUtils.resolveProcessorName(endpoint), pjp);
     }
 
