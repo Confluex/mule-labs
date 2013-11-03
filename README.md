@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.org/Confluex/confluex-mule-extensions.png?branch=master)](https://travis-ci.org/Confluex/confluex-mule-extensions)
 
-# Confluex Mule Extensions
+# Confluex Mule Labs
 
-This is a sandbox which we use to test and enhance ideas for libraries for Mule extensions. If they mature, they will
+This is a sandbox which we use to test and enhance ideas for libraries for Mule. If they mature, they will
 be promoted to a top level project or as a pull request into the Mule project itself.
 
 Until then, feel free to use them. We'll try to keep breaking changes to a minimum.
