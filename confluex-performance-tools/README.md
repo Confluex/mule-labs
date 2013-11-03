@@ -33,7 +33,7 @@ Create your aspectJ configuration file. This is where you tell it what packages 
         <include within="com.mycompany..*"/>
     </weaver>
     <aspects>
-        <aspect name="com.confluex.mule.performance.PerformanceLoggerAspect"/>
+        <aspect name="com.confluex.mule.performance.PerformanceAspect"/>
         <include within="com.mycompany..*"/>
     </aspects>
 </aspectj>

@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Aspect
-public class PerformanceLoggerAspect {
+public class PerformanceAspect {
     protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Around(value = "call(public * org.mule.api.processor.MessageProcessor+.process(..)) && target(processor) && args(event)", argNames = "pjp,event,processor")

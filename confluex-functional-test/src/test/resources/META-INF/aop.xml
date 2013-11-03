@@ -7,7 +7,7 @@
         <exclude within="org.mule.util..*"/>
     </weaver>
     <aspects>
-        <aspect name="com.confluex.mule.performance.PerformanceLoggerAspect"/>
+        <aspect name="com.confluex.mule.performance.PerformanceAspect"/>
         <include within="com.confluex..*"/>
     </aspects>
 </aspectj>
