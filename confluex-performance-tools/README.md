@@ -106,7 +106,7 @@ assert outboxEndpoints.avg < 25
 ```
 
 > Currently, the convention is "Flow.ClassName.name" which is not consistently derived right now. This will be refined
-> soon to offer better testing.
+> soon to offer better testing. This area needs work badly.
 
 
 
