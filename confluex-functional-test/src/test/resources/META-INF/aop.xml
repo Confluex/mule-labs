@@ -3,6 +3,7 @@
 <aspectj>
     <weaver options="-showWeaveInfo -debug -verbose -XmessageHandlerClass:org.springframework.aop.aspectj.AspectJWeaverMessageHandler">
         <include within="org.mule..*"/>
+        <include within="com.confluex..*"/>
         <exclude within="org.mule.util..*"/>
     </weaver>
     <aspects>

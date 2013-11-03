@@ -15,6 +15,7 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
             <component>
                 <singleton-object class="com.confluex.mule.test.functional.components.SleepyComponent"/>
             </component>
+            <set-payload value="Hello #[payload]"/>
             <logger level="INFO" category="TestPerformanceTools" message="sending message: #[payload]"/>
             <outbound-endpoint ref="outbox"/>
         </foreach>
