@@ -48,7 +48,7 @@ __pom.xml__
         <version>${aspectj.version}</version>
         <scope>provided</scope>
     </dependency>
-``
+```
 
 Next, you'll need to create your metadata file for AspectJ which tells it what packages to instrument:
 
