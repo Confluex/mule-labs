@@ -6,6 +6,8 @@ import org.mule.tck.junit4.FunctionalTestCase
 import static com.jamonapi.MonitorFactory.*
 
 class PerformanceLoggerAspectFunctionalTest extends FunctionalTestCase {
+    protected static final String DEFAULT_JMON_UNIT = "ms."
+
     @Override
     protected String getConfigResources() {
         return "test-performance-tools.xml"
@@ -26,21 +28,15 @@ class PerformanceLoggerAspectFunctionalTest extends FunctionalTestCase {
             def msg = client.request("outbox", 5000)
             assert payload.find { "Hello ${it}" == msg.payloadAsString }
         }
-        def transformers = getMonitor("[Transformer] SetPayloadTransformer", "ms.")
-        def inboxEndpoints = getMonitor("[AbstractEndpoint] inbox", "ms.")
-        def outboxEndpoints = getMonitor("[AbstractEndpoint] outbox", "ms.")
-        def foreachProcessors = getMonitor("[MessageProcessor] Foreach", "ms.")
-        def outboundTimeoutProcessors = getMonitor("[MessageProcessor] OutboundEventTimeoutMessageProcessor", "ms.")
+        def setPayloadTransformers = getMonitor("TestPerformanceTools.MessageProcessor.SetPayloadTransformer", DEFAULT_JMON_UNIT)
+        def inboxEndpoints = getMonitor("MuleClient.AbstractEndpoint.inbox", DEFAULT_JMON_UNIT)
+        def outboxEndpoints = getMonitor("TestPerformanceTools.AbstractEndpoint.outbox", DEFAULT_JMON_UNIT)
+        def foreachProcessors = getMonitor("TestPerformanceTools.MessageProcessor.Foreach", DEFAULT_JMON_UNIT)
 
         // TODO Needs isolation. When ran as a suite, these values will be larger due to the monitoring of all flows.
         assert inboxEndpoints.hits >= 1
         assert foreachProcessors.hits >= 1
-        assert transformers.hits >= 4
+        assert setPayloadTransformers.hits >= 4
         assert outboxEndpoints.hits >= 4
-        assert outboundTimeoutProcessors.hits >= 5
-//        assert inboxEndpoints.hits == 1
-//        assert transformers.hits == 4
-//        assert outboxEndpoints.hits == 4
-//        assert outboundTimeoutProcessors.hits == 5
     }
 }
