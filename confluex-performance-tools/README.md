@@ -14,6 +14,8 @@ You can download an Excel report of the performance stats via URL :
 
 http://my.mule.server:9138/performance
 
+![Performance Report](PerformanceExcelReport.png)
+
 # Using the reports in Tests
 
 For now, use the JAMon MonitorFactory. This will likely change in the future as we abstract ourselves from the API.
