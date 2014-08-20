@@ -680,6 +680,12 @@
         </dependency>
     </dependencies>
     <profiles>
+        <profile>
+            <id>bamboo</id>
+            <properties>
+                <m2.HOME>/home/bamboo</m2.HOME>
+            </properties>
+        </profile>
         <!-- for releasing to the Sonatype OSS repo (sync with central repo) -->
         <profile>
             <id>sonatype</id>
