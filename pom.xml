@@ -65,6 +65,7 @@
         <log4j.version>1.2.16</log4j.version>
         <sl4fj.version>1.6.1</sl4fj.version>
         <aspectj.version>1.6.11</aspectj.version>
+        <aspectj.agent.path>${env.HOME}/.m2/repository/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar</aspectj.agent.path>
     </properties>
     <modules>
         <module>confluex-test-notifications</module>
@@ -151,7 +152,7 @@
                     <version>2.16</version>
                     <configuration>
                         <argLine>
-                            -javaagent:${env.HOME}/.m2/repository/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+                            -javaagent:${aspectj.agent.path}
                         </argLine>
                         <systemProperties>
                             <property>
@@ -680,6 +681,12 @@
         </dependency>
     </dependencies>
     <profiles>
+        <profile>
+            <id>bamboo</id>
+            <properties>
+                <aspectj.agent.path>/home/bamboo/.m2/repository/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar</aspectj.agent.path>
+            </properties>
+        </profile>
         <!-- for releasing to the Sonatype OSS repo (sync with central repo) -->
         <profile>
             <id>sonatype</id>
