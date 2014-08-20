@@ -669,6 +669,10 @@
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
         <!--suppress MavenDuplicateDependenciesInspection -->
         <dependency>
             <groupId>junit</groupId>
